@@ -10,4 +10,8 @@ public interface CategoryRepository {
     List<Category> findByName(String name);
     List<Category> findByParentId(Long parentId);
     List<Category> findByLevel(int level);
+
+    Optional<Category> findByIdWithChildren(Long id);
+    List<Category> findByNameWithChildren(String name);
+    List<Category> findAllTopLevelWithChildren();
 }

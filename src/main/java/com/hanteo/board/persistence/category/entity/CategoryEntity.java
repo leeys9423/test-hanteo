@@ -8,6 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -28,6 +33,10 @@ public class CategoryEntity {
     @Column(name = "parent_id")
     @Comment("부모 카테고리 ID")
     private Long parentId;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Set<CategoryEntity> children = new HashSet<>();
 
     @Builder
     public CategoryEntity(String name, int level, Long parentId) {

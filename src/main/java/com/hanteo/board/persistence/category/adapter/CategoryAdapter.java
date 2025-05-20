@@ -42,4 +42,40 @@ public class CategoryAdapter implements CategoryRepository {
                 .map(CategoryEntity::toDomain)
                 .toList();
     }
+
+    @Override
+    public Optional<Category> findByIdWithChildren(Long id) {
+        return categoryJpaRepository.findByIdWithChildrenFetch(id)
+                .map(this::mapToDomainWithChildren);
+    }
+
+    @Override
+    public List<Category> findByNameWithChildren(String name) {
+        return categoryJpaRepository.findByNameWithChildrenFetch(name).stream()
+                .map(this::mapToDomainWithChildren)
+                .toList();
+    }
+
+    @Override
+    public List<Category> findAllTopLevelWithChildren() {
+        return categoryJpaRepository.findAllTopLevelWithChildrenFetch().stream()
+                .map(this::mapToDomainWithChildren)
+                .toList();
+    }
+
+    // 자식 카테고리를 포함한 매핑 메서드
+    private Category mapToDomainWithChildren(CategoryEntity entity) {
+        if (entity == null) return null;
+
+        Category category = CategoryEntity.toDomain(entity);
+
+        if (entity.getChildren() != null) {
+            List<Category> children = entity.getChildren().stream()
+                    .map(this::mapToDomainWithChildren)
+                    .toList();
+            category.setChildren(children);
+        }
+
+        return category;
+    }
 }

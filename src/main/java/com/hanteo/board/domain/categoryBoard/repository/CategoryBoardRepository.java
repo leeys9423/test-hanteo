@@ -7,4 +7,6 @@ import java.util.List;
 public interface CategoryBoardRepository {
     List<CategoryBoard> findByCategoryId(Long categoryId);
     List<CategoryBoard> findByBoardId(Long boardId);
+
+    List<CategoryBoard> findByCategoryIdsWithBoards(List<Long> categoryIds);
 }

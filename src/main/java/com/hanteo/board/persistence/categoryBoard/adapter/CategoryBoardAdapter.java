@@ -31,6 +31,13 @@ public class CategoryBoardAdapter implements CategoryBoardRepository {
     }
 
     @Override
+    public List<CategoryBoard> findByCategoryIdsWithBoards(List<Long> categoryIds) {
+        return categoryBoardJpaRepository.findByCategoryIdsWithBoardsFetch(categoryIds).stream()
+                .map(this::mapToDomain)
+                .toList();
+    }
+
+    @Override
     public List<CategoryBoard> findByBoardId(Long boardId) {
         return categoryBoardJpaRepository.findByBoardId(boardId).stream()
                 .map(this::mapToDomain)

@@ -1,10 +1,7 @@
 package com.hanteo.board.domain.category;
 
 import com.hanteo.board.domain.board.Board;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +13,7 @@ public class Category {
     private String name;
     private int level;
     private Long parentId;
+    @Setter
     private List<Category> children = new ArrayList<>();
     private List<Board> boards = new ArrayList<>();
 
