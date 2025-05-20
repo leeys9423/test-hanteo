@@ -1,5 +1,6 @@
 package com.hanteo.board.persistence.board.entity;
 
+import com.hanteo.board.domain.board.Board;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -28,6 +29,25 @@ public class BoardEntity {
     public BoardEntity(String name, int boardNumber) {
         this.name = name;
         this.boardNumber = boardNumber;
+    }
+
+    public static Board toDomain(BoardEntity entity) {
+        if (entity == null) return null;
+
+        return Board.builder()
+                .id(entity.id)
+                .name(entity.name)
+                .boardNumber(entity.boardNumber)
+                .build();
+    }
+
+    public static BoardEntity fromDomain(Board domain) {
+        if (domain == null) return null;
+
+        return BoardEntity.builder()
+                .name(domain.getName())
+                .boardNumber(domain.getBoardNumber())
+                .build();
     }
 }
 

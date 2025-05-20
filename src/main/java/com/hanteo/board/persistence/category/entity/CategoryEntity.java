@@ -1,5 +1,6 @@
 package com.hanteo.board.persistence.category.entity;
 
+import com.hanteo.board.domain.category.Category;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,5 +34,26 @@ public class CategoryEntity {
         this.name = name;
         this.level = level;
         this.parentId = parentId;
+    }
+
+    public static Category toDomain(CategoryEntity entity) {
+        if (entity == null) return null;
+
+        return Category.builder()
+                .id(entity.id)
+                .name(entity.name)
+                .level(entity.level)
+                .parentId(entity.parentId)
+                .build();
+    }
+
+    public static CategoryEntity fromDomain(Category domain) {
+        if (domain == null) return null;
+
+        return CategoryEntity.builder()
+                .name(domain.getName())
+                .level(domain.getLevel())
+                .parentId(domain.getParentId())
+                .build();
     }
 }
